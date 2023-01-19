@@ -4,7 +4,7 @@
 #include <algorithm>
 #define ll long long
 const ll N = 1000000;
-const ll rep = 500;
+const ll rep = 2000;
 std::random_device rd;
 std::mt19937_64 gen(rd());
 std::uniform_real_distribution<> value_dist(0.0f, 1.0f);
@@ -78,15 +78,23 @@ void randTest()
                 qs_rand(testVector, 0, N - 1);
                 auto end = std::chrono::high_resolution_clock::now();
 
-                auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+                auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
                 ran[i] = duration.count();
         }
 }
 int main()
 {
-        detTest();
         randTest();
-        std::cout << "Non Random Quick Sort Time(ns): " << std::accumulate(det.begin(), det.end(), 0LL) / rep << std::endl;
-        std::cout << "Randomized Quick Sort Time(ns): " << std::accumulate(ran.begin(), ran.end(), 0LL) / rep << std::endl;
+        auto avg = std::accumulate(ran.begin(), ran.end(), 0LL) / rep;
+        std::cout << avg << '\n';
+        randTest();
+        auto times = 10LL, freq = 0LL;
+        auto lim = avg + static_cast<long double>(avg * times) / 100.0;
+        for (int i = 0; i < rep; i++)
+        {
+                if (ran[i] > lim)
+                        ++freq;
+        }
+        std::cout << freq << std::endl;
         return 0;
 }
