@@ -4,8 +4,8 @@
 #include <algorithm>
 #include <cstdio>
 #define ll long long
-const ll N = 1000000;
-const ll rep = 1;
+const ll N = 100;
+const ll rep = 2000;
 std::random_device rd;
 std::mt19937_64 gen(rd());
 std::uniform_real_distribution<> value_dist(0.0f, 1.0f);
@@ -18,10 +18,10 @@ int partition(std::vector<double> &v, int l, int r, ll &ops)
     double pivot = v[r];
     for (int j = l; j < r; j++)
     {
+        ++ops;
         if (v[j] <= pivot)
         {
             ++i;
-            ++ops;
             std::swap(v[i], v[j]);
         }
     }
@@ -111,7 +111,7 @@ void merge_test()
 }
 int main()
 {
-    // det_test();
+    det_test();
     merge_test();
     std::cout << "Quick Sort Comparisions: " << std::accumulate(det.begin(), det.end(), 0LL) / rep << std::endl;
     std::cout << "Merge Sort Comparisions: " << std::accumulate(mer.begin(), mer.end(), 0LL) / rep << std::endl;

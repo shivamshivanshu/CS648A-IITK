@@ -17,9 +17,9 @@ int partition(std::vector<double> &v, int l, int r, ll &ops)
     double pivot = v[r];
     for (int j = l; j < r; j++)
     {
+        ++ops;
         if (v[j] <= pivot)
         {
-            ++ops;
             ++i;
             std::swap(v[i], v[j]);
         }
